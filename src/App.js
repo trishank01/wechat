@@ -3,7 +3,7 @@ import Register from './pages/Register';
 
 function App() {
   return (
-    <div className="text-3xl font-bold underline">
+    <div className="">
       <Register/>
     </div>
   );
