@@ -8,12 +8,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCAqmaVpE62GA44eUkU5KtYCXdoN-YcEt0",
-  authDomain: "wechat-33dd2.firebaseapp.com",
-  projectId: "wechat-33dd2",
-  storageBucket: "wechat-33dd2.appspot.com",
-  messagingSenderId: "931709337577",
-  appId: "1:931709337577:web:f1424c7a00936377931578"
+  apiKey: "AIzaSyB59p3rQPbtJJzdtl74tTgkejAnhBIPsDk",
+  authDomain: "wechat-affa9.firebaseapp.com",
+  projectId: "wechat-affa9",
+  storageBucket: "wechat-affa9.appspot.com",
+  messagingSenderId: "233276180289",
+  appId: "1:233276180289:web:1dc8f6f10caca4740383c0"
 };
 
 // Initialize Firebase
