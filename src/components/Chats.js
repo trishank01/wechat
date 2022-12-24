@@ -1,6 +1,26 @@
-import React from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/authContext";
+import { db } from "../firebase";
 
 const Chats = () => {
+  const [chats, setChats] = useState([]);
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+   const getChats = () => {
+    const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+      setChats(doc.data());
+    });
+    return () => {
+      unsub()
+    }
+   }
+
+   currentUser.uid && getChats()
+  }, [currentUser.uid]);
+
+  console.log(chats)
   return (
     <div className="">
       <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52] cursor-pointer">
@@ -14,7 +34,6 @@ const Chats = () => {
           <p className="text-[14px] text-[lightgray]">Hello how are you</p>
         </div>
       </div>
-
 
       <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52]">
         <img
