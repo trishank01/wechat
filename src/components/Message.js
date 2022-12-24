@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import { doc, onSnapshot } from 'firebase/firestore'
+import React, { useContext, useEffect, useState } from 'react'
+import { ChatContext } from '../context/ChatContext'
+import { db } from '../firebase'
 
-const Message = () => {
+const Message = ({message}) => {
     const [owner, setOwner] = useState(false)
+
+     console.log(message)
   return (
     <div className={`flex gap-5 mb-4 ${owner ? "flex-row-reverse" : ""}`}>
         <div className='flex flex-col text-gray-500 '>

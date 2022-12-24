@@ -1,11 +1,13 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
+import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
    const getChats = () => {
@@ -19,45 +21,28 @@ const Chats = () => {
 
    currentUser.uid && getChats()
   }, [currentUser.uid]);
+  
+  const handleSelect = (u) => {
+    dispatch({type : "CHANGE_USER" , payload : u });
+  }
 
-  console.log(chats)
+
+  
   return (
     <div className="">
-      <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52] cursor-pointer">
-        <img
-          className="w-[50px] h-[50px] object-cover rounded-full"
-          src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW4lMjBmYWNlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-          alt=""
-        />
-        <div className="userChatInfo">
-          <span className="text-[18px] font-semibold">Jane</span>
-          <p className="text-[14px] text-[lightgray]">Hello how are you</p>
+     {Object.entries(chats).map(chat => (
+          <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52] cursor-pointer" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+          <img
+            className="w-[50px] h-[50px] object-cover rounded-full"
+            src={chat[1].userInfo.photoURL}
+            alt=""
+          />
+          <div className="userChatInfo">
+            <span className="text-[18px]">{chat[1].userInfo.displayName}</span>
+            {/* <p className="text-[14px] text-[lightgray]">{chat[1].userInfo.lastMessage?.text}</p> */}
+          </div>
         </div>
-      </div>
-
-      <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52]">
-        <img
-          className="w-[50px] h-[50px] object-cover rounded-full"
-          src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aHVtYW4lMjBmYWNlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-          alt=""
-        />
-        <div className="userChatInfo">
-          <span className="text-[18px] font-semibold">John</span>
-          <p className="text-[14px] text-[lightgray]">lets meet</p>
-        </div>
-      </div>
-
-      <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52]">
-        <img
-          className="w-[50px] h-[50px] object-cover rounded-full"
-          src="https://t4.ftcdn.net/jpg/02/32/98/33/360_F_232983351_z5CAl79bHkm6eMPSoG7FggQfsJLxiZjY.jpg"
-          alt=""
-        />
-        <div className="userChatInfo">
-          <span className="text-[18px] font-semibold">Doe</span>
-          <p className="text-[14px] text-[lightgray]">Join us</p>
-        </div>
-      </div>
+     ))}
     </div>
   );
 };
