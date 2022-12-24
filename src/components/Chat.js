@@ -8,7 +8,6 @@ import { ChatContext } from '../context/ChatContext'
 
 const Chat = () => {
   const {data} = useContext(ChatContext)
-  console.log(data)
   return (
     <div className='flex-[4]'>
         <div className='h-[55px] flex items-center p-3 text-gray-400 bg-[#5d5b8d] justify-between'>

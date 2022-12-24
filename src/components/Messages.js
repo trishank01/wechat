@@ -21,7 +21,7 @@ const Messages = () => {
   return (
     <div className='bg-[#ddddf7] p-3 h-[calc(100%-110px)] overflow-y-scroll'>
        {message.map(msg => (
-         <Message message={msg}/>
+         <Message message={msg} key={msg.id}/>
        ))}
     </div>
   )
