@@ -5,13 +5,16 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore"; 
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const Register = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+  const [isLaoding, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
@@ -46,9 +49,11 @@ const Register = () => {
             //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
+            setIsLoading(false)
           } catch (err) {
             console.log(err);
             setErr(true);
+            setIsLoading(false)
             //setLoading(false);
           }
         });
@@ -64,7 +69,7 @@ const Register = () => {
       <div className="bg-white py-6 px-10 flex flex-col gap-5 items-center">
         <span className="text-[#5d5b8d] font-semibold text-[22px]">WeChat</span>
         <span className="text-[#5d5b8d] font-semibold text-[18px]">
-          Register
+          Register 
         </span>
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <input
@@ -96,7 +101,7 @@ const Register = () => {
             placeholder="Add an avatar"
           />
           <button className="p-3 text-white border-none bg-[#7b96ec] font-semibold cursor-pointer">
-            Sign Up
+              {isLaoding ?  <Loader/> : "Sign Up"}
           </button>
           {err && <span>Something went Wrong</span>}
         </form>

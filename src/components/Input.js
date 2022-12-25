@@ -17,8 +17,10 @@ const Input = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
 
+
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+  console.log(data)
   const handleSend = async () => {
     if (img) {
       const storageRef = ref(storage, uuid());
@@ -27,9 +29,9 @@ const Input = () => {
 
       uploadTask.on(
         (error) => {
-          //TODO:Handle Error
+         console.log(error)
         },
-        () => {
+        () => { 
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
