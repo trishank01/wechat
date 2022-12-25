@@ -19,7 +19,6 @@ const Search = () => {
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
-  console.log(user)
 
   const handleSearch = async () => {
     const qry = query(

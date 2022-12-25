@@ -8,6 +8,9 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+  const { data } = useContext(ChatContext);
+  //console.log(data.user.uid)
+  //console.log(Object.entries(chats)[1][1].userInfo.uid)
 
   useEffect(() => {
    const getChats = () => {
@@ -31,7 +34,7 @@ const Chats = () => {
   return (
     <div className="">
      {Object.entries(chats)?.sort((a , b) => b[1].date - a[1].date).map(chat => (
-          <div className="p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52] cursor-pointer" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+          <div className={`p-3 flex items-center gap-3 text-white hover:bg-[#2f2d52] cursor-pointer ${data.user.uid === chat[1].userInfo.uid ? "bg-slate-500" : ""}`} key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
           <img
             className="w-[50px] h-[50px] object-cover rounded-full"
             src={chat[1].userInfo.photoURL}
